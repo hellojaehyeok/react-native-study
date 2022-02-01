@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/tab/home/home';
 import Search from '../screens/tab/search/search';
 import MyPage from '../screens/tab/mypage/mypage';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 

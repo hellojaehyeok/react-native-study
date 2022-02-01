@@ -7,15 +7,13 @@ import Intro from './src/screens/intro';
 
 const Stack = createStackNavigator();
 
-
-
 const App = () => {
   return (
       <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Intro"
             screenOptions={{
-              animationEnabled:false,
+              animationEnabled:true,
               headerShown: false
             }}
           >
