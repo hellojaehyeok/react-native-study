@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -9,14 +9,25 @@ import { VW } from '../constant/size';
 const Intro = (props) => {
     const navigation = useNavigation();
 
+    const onPressTab = () => {
+        navigation.navigate(
+            "Tab",
+            {
+                screen:"Home",
+                userName:"sjh"
+            },
+        );
+    }
+
     return(
         <View style={styles.container}>
             {/* 상단 */}
             <Text style={styles.title}>React-Native{`\n`}study app</Text>
             <TouchableOpacity
                 style={styles.btnWrap}
-                onPress={() => navigation.navigate("Tab")}>
-                <Text style={styles.btnText}>Go main</Text>
+                onPress={onPressTab}
+            >
+                <Text style={styles.btnText}>Go Home</Text>
             </TouchableOpacity>
 
             {/* 하단 */}
@@ -43,7 +54,6 @@ const styles = EStyleSheet.create({
         backgroundColor:INIDIGO,
         justifyContent:"center",
         alignItems:"center",
-        borderWidth:1,
         flex:1,
     },
     title:{
