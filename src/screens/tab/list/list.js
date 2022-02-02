@@ -1,7 +1,9 @@
+import { useFocusEffect } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, ScrollView, FlatList} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useCallback } from 'react/cjs/react.development';
 import ListEl from '../../../components/list/listEl';
 import { BLUE, INIDIGO, SKYBLUE } from '../../../constant/color';
 import { VW } from '../../../constant/size';
@@ -10,17 +12,24 @@ import { VW } from '../../../constant/size';
 
 const List = (props) => {
 
-    const [listData, setListData] = useState(new Array(3));
+    const [listData, setListData] = useState([]);
+
+    useFocusEffect(useCallback(() => {
+        let newArr = [];
+        for(let i = 0 ; i < 20 ; i++){
+            newArr.push({title:"product", id:i})
+        }
+        setListData([...newArr])
+    }, []) )
 
     return(
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.listWrap}>
-                <FlatList 
-                    data={listData}
-                    renderItem={ListEl}
-                    keyExtractor={(i,index)=>index}
-                />
-            </ScrollView>
+            <FlatList 
+                style={styles.listWrap}
+                data={listData}
+                renderItem={ListEl}
+                keyExtractor={(i)=>i.id}
+            />
         </SafeAreaView>
     )
 };
@@ -35,52 +44,11 @@ const styles = EStyleSheet.create({
     container:{
         backgroundColor:SKYBLUE,
         flex:1,
-    },
-    title:{
-        color:"#fff",
-        fontSize:20,
+        flexGrow:1,
     },
     listWrap:{
         width:"100%",
         display:"flex",
-    },
-    listEl:{
-        marginHorizontal:"10%",
-        width:"80%",
-        height:"100rem",
-        backgroundColor:"#ccdfff",
-        borderRadius:"30rem",
-        display: "flex",
-        flexDirection:"row",
-        alignItems:"center",
-        padding:"10rem"
-    },
-    listLeft:{
-        height: "100%",
-        width: "30%",
-        alignItems:"center",
-        justifyContent:"center",
-    },
-    listImg:{
-        height: "50%",
-        width: "50%",
-        backgroundColor:INIDIGO,
-        borderRadius:"50rem"
-    },
-    listRight:{
-        borderLeftWidth:1,
-        borderColor:BLUE,
-        width: "70%",
-        height: "100%",
-        justifyContent:"center",
-        paddingLeft:"15rem",
-    },
-    listTitle:{
-        color: INIDIGO,
-        fontSize:"20rem"
-    },
-    listDesc:{
-        color: INIDIGO,
-        fontSize:"14rem"
+        height:"100%",
     },
 })

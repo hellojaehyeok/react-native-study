@@ -13,7 +13,7 @@ const Intro = (props) => {
         navigation.navigate(
             "Tab",
             {
-                screen:"Home",
+                screen:"List",
                 userName:"sjh"
             },
         );

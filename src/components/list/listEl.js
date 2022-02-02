@@ -1,19 +1,20 @@
 import React from 'react';
 import { View, Text,TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { BLUE, INIDIGO } from '../../constant/color';
+import { BLUE, INIDIGO, SKYBLUEBG } from '../../constant/color';
 import { VW } from '../../constant/size';
 
 
 
-const ListEl = (props) => {
+const ListEl = ({item,index}) => {
+
     return(
-        <TouchableOpacity style={styles.listEl}>
+        <TouchableOpacity style={styles.listEl} onPress={() =>{item.onPress&&item.onPress(index)} }>
             <View style={styles.listLeft}>
                 <View style={styles.listImg}></View>
             </View>
             <View style={styles.listRight}>
-                <Text style={styles.listTitle}>Title</Text>
+                <Text style={styles.listTitle}>{item.title + index}</Text>
                 <Text style={styles.listDesc}>I am Fontend-developer</Text>
             </View>
         </TouchableOpacity>
@@ -31,7 +32,7 @@ const styles = EStyleSheet.create({
         marginHorizontal:"10%",
         width:"80%",
         height:"100rem",
-        backgroundColor:"#ccdfff",
+        backgroundColor:SKYBLUEBG,
         borderRadius:"30rem",
         display: "flex",
         flexDirection:"row",
