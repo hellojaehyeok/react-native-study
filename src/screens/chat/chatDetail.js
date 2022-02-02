@@ -1,13 +1,13 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useCallback } from 'react/cjs/react.development';
 import { SKYBLUE, SKYBLUEBG } from '../../constant/color';
-import { VW } from '../../constant/size';
-
+import { VH, VW } from '../../constant/size';
+import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
 
 const MyChat = () => {
     return (
@@ -25,19 +25,11 @@ const getChatData = () => {
     for(let i=0 ; i < 30 ; i++){
         dataArr.push(Math.round(Math.random())===0)
     }
-    console.log(dataArr)
     return dataArr;
 }
 
 const ChatDetail = (props) => {
-    // 0 -> mychat, 1 -> yourchat
-    const [chatData, setChatData] = useState(getChatData())
-
-    useFocusEffect(
-        useCallback(() => {
-            
-        }, [])
-    )
+    const [chatData, setChatData] = useState(getChatData());
 
     return(
         <SafeAreaView style={styles.container}>
