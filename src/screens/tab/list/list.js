@@ -1,8 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, Text, ScrollView, FlatList} from 'react-native';
+import { View, Text, ScrollView, FlatList, SafeAreaView} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useCallback, useEffect } from 'react/cjs/react.development';
 import ListEl from '../../../components/list/listEl';
 import { BLUE, INIDIGO, SKYBLUE } from '../../../constant/color';
@@ -54,7 +53,12 @@ const List = (props) => {
 
     return(
         <SafeAreaView style={styles.container}>
+            
             <FlatList 
+                // ListHeaderComponent={}
+                // ListFooterComponent={}
+                // StickyHeaderComponent={}
+
                 onScroll={onScrollList}
                 style={styles.listWrap}
                 data={listData}
@@ -75,11 +79,9 @@ const styles = EStyleSheet.create({
     container:{
         backgroundColor:SKYBLUE,
         flex:1,
-        flexGrow:1,
     },
     listWrap:{
         width:"100%",
-        display:"flex",
         height:"100%",
     },
 })

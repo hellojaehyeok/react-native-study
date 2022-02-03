@@ -1,8 +1,7 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, TouchableOpacity, FlatList} from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, FlatList, SafeAreaView} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useCallback } from 'react/cjs/react.development';
 import ListEl from '../../../components/list/listEl';
 import { INIDIGO, SKYBLUE } from '../../../constant/color';
