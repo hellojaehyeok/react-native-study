@@ -12,7 +12,7 @@ const App = () => {
   return (
       <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Tab"
+            initialRouteName="Intro"
             screenOptions={{
               animationEnabled:true,
               headerShown: false
