@@ -9,7 +9,6 @@ import Timer from '../../../components/timer/timer';
 const today = new Date();
 
 const Home = (props) => {
-
     const navigation = useNavigation();
 
     return(
@@ -18,6 +17,7 @@ const Home = (props) => {
             <Timer />
 
             <Text style={styles.title}>Home</Text>
+
         </SafeAreaView>
     )
 };
