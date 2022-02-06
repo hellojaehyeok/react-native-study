@@ -14,9 +14,6 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigation = ({route}) => {
 
-  console.log("Tab =========== ")
-  console.log(route);
-
   return (
       <Tab.Navigator
         screenOptions={{
@@ -24,6 +21,7 @@ const TabNavigation = ({route}) => {
           tabBarStyle:{ display: 'none' }
         }}
         tabBar={() => <TabsUI tabs={tabs}/>}
+        initialRouteName={"Home"}
       >
         <Tab.Screen name='Home' component={Home}/>
         <Tab.Screen name='List' component={List} />
