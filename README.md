@@ -22,7 +22,7 @@ React Native 관련 저장소입니다.
 <strong>branch</strong>
 
 * main
-* publishing -> 스타일링
+* style -> 스타일링
 * development -> 개발
 
 
@@ -31,6 +31,7 @@ React Native 관련 저장소입니다.
 ### RN 구조 잡기
 ---
 구조 관련 정리 : https://talkwithcode.tistory.com/49            
+스크인 이동 정리 : https://talkwithcode.tistory.com/50?category=1019862
 
 "Nesting navigators" 방식으로 진행했습니다.       
 내비게이터 안에 내비게이터가 있는 구조로 이번 프로젝트는           
