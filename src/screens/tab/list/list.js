@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, FlatList, SafeAreaView} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useCallback, useEffect } from 'react/cjs/react.development';
+import InfinityScroll from '../../../components/common/infinityScroll';
 import ListEl from '../../../components/list/listEl';
 import { BLUE, INIDIGO, SKYBLUE } from '../../../constant/color';
 import { VW } from '../../../constant/size';
@@ -27,43 +28,22 @@ const List = (props) => {
             }
             setListData([...newArr]);
             resolve();
-        }, 500)
+        }, 1000)
     })
 
-    const onScrollList = async (e) => {
-        if(!isUpdateList){return}
-        // 현재 스크롤 값
-        let updateScroll = e.nativeEvent.contentOffset.y;
-        if(updateScroll == 0){return}
-
-        // 현재 보여지는 화면 높이 값
-        let screenHeight = e.nativeEvent.layoutMeasurement.height;
-        // 전체 문서의 높이
-        let documentHeight = e.nativeEvent.contentSize.height;
-        // 무한 스크롤이 시작하는 최소의 여백
-        let paddingBottom = 100;
-
-        if (screenHeight + updateScroll + paddingBottom >= documentHeight) {
-            if(!isUpdateList){return};
-            setIsUpdateList(false);
-            await fetchData();
-            setIsUpdateList(true);
-        }
-    };
+    // 마지막 스크롤 감지
+    const onScrollEnd = async () =>{
+        await fetchData();
+    }
 
     return(
         <SafeAreaView style={styles.container}>
-            
-            <FlatList 
-                // ListHeaderComponent={}
-                // ListFooterComponent={}
-                // StickyHeaderComponent={}
-
-                onScroll={onScrollList}
+            <InfinityScroll 
+                endPoint={100}
+                onScrollEnd={onScrollEnd}
                 style={styles.listWrap}
                 data={listData}
                 renderItem={ListEl}
-                keyExtractor={(i,index)=>index}
             />
         </SafeAreaView>
     )
