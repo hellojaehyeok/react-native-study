@@ -1,15 +1,16 @@
 
-import React, { useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { useSafeArea } from 'react-native-safe-area-context';
 import TabsShape from './tabsShape';
 import TabsHandler from './tabsHandler';
+import MoreTabs from './moreTabs';
 
 const { width: wWidth } = Dimensions.get('window');
 
 function TabsUI({ tabs }) {
     const tabWidth = useMemo(() => wWidth / tabs.length, [tabs.length]);
-    
+    const [isMoreTab, setIsMoreTab] = useState(false);
+
     return (
         <View
             style={{
@@ -19,11 +20,15 @@ function TabsUI({ tabs }) {
                 left: 0,
             }}
         >   
-            {/* <MoreTap /> */}
+            {
+                isMoreTab && 
+                <MoreTabs tabWidth={tabWidth}/>
+            }
+
             <TabsShape tabWidth={tabWidth}/>
-            <TabsHandler tabs={tabs} tabWidth={tabWidth} />
+            <TabsHandler tabs={tabs} isMoreTab={isMoreTab} setIsMoreTab={setIsMoreTab}/>
         </View>
     );
 }
 
-export default TabsUI;
+export default memo(TabsUI);

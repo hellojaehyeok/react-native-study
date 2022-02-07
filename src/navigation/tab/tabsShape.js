@@ -7,11 +7,13 @@ import { line, curveBasis } from 'd3-shape';
 import { TAB_HEIGHT, VW } from '../../constant/size';
 import { View } from 'react-native';
 
-const lineGenerator = line()
-  .x(({ x }) => x)
-  .y(({ y }) => y);
+
 
 function TabsShape({ tabWidth }) {
+  const lineGenerator = line()
+  .x(({ x }) => x)
+  .y(({ y }) => y);
+  
   const d = useMemo(() => {
     const left = lineGenerator([
       { x: 0, y: 0 },

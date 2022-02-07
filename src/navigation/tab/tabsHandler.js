@@ -7,7 +7,7 @@ import { TAB_HEIGHT, VW } from '../../constant/size';
 import { INIDIGO } from '../../constant/color';
 
 
-function TabsHandler({ tabs }) {
+function TabsHandler({ tabs, isMoreTab, setIsMoreTab }) {
   const route = useRoute();
   const navigator = useNavigation();
 
@@ -23,6 +23,11 @@ function TabsHandler({ tabs }) {
     return "#454545"
   }
 
+  const onPressMoreBtn = () => {
+    setIsMoreTab(isMoreTab => !isMoreTab)
+  }
+
+
   return(
     <View style={styles.container}>
       {
@@ -31,8 +36,12 @@ function TabsHandler({ tabs }) {
           if(index===2){
             return(
               <View style={styles.tabEl} key={index}>
-                <TouchableOpacity style={styles.plusBtn}>
-                  <Text style={{color:"#fff"}}>+</Text>
+                <TouchableOpacity style={styles.plusBtn} onPress={onPressMoreBtn}>
+                  <Text style={{color:"#fff"}}>
+                    {
+                      isMoreTab?"-":"+"
+                    }
+                  </Text>
                 </TouchableOpacity>
               </View>
             )
