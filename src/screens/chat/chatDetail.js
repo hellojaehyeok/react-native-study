@@ -9,64 +9,40 @@ import { SKYBLUE, SKYBLUEBG } from '../../constant/color';
 import { VH, VW } from '../../constant/size';
 import { RecyclerListView, DataProvider, LayoutProvider } from "recyclerlistview";
 
-const MyChat = () => {
-    return (
-        <View style={styles.chatWrap, {alignItems:"flex-end"}}><Text style={styles.chatText}>my chat</Text></View>
-    )
-}
-const YourChat = () => {
-    return (
-        <View style={styles.chatWrap, {alignItems:"flex-start"}}><Text style={styles.chatText}>your chat</Text></View>
-    )
-}
 
-const getChatData = (arr) => {
-    let dataArr = arr;
-    for(let i=0 ; i < 30 ; i++){
-        dataArr.push(Math.round(Math.random())===0)
-    }
-    return dataArr;
+const getChatData = (index) => {
+    return [`가${index}`,`나${index}`,`다${index}`,`라${index}`,`마${index}`,`바${index}`,`사${index}`,`아${index}`,`자${index}`,`차${index}`,`카${index}`,`타${index}`,`파${index}`,`하${index}`];
 }
 
 const ChatDetail = (props) => {
     const chatScrollRef = useRef();
     const chatContentRef = useRef();
-    const [chatData, setChatData] = useState([]);
-    const [isFirstRender, setIsFirstRender] = useState(true);
     const [totalChatHeight, setTotalChatHeight] = useState(0);
-
+    const [chatData, setChatData] = useState([]);
+    const [pageIndex, setPageIndex] = useState(0);
 
     useEffect(()=>{
-        let chatArr = getChatData([]);
+        let chatArr = getChatData(pageIndex);
         setChatData([...chatArr])
     }, [])
 
     const onScrollChat = async e => {
-        // 현재 스크롤 값
-        let updateScroll = e.nativeEvent.contentOffset.y;
-        // 전체 문서의 높이
-        let documentHeight = e.nativeEvent.contentSize.height;
+        if(e.nativeEvent.contentOffset.y == 0){
+            setTotalChatHeight(e.nativeEvent.contentSize.height);
 
-        if(updateScroll == 0){
-            setTotalChatHeight(documentHeight);
             // 서버 통신
-            let chatArr = getChatData(chatData);
+            let chatArr = getChatData(pageIndex + 1).concat(chatData);
             setChatData([...chatArr])
+            setPageIndex(pageIndex+1);
         }
     }
-    const onChangeChatSize = () => {
-        if(isFirstRender){setIsFirstRender(false); return}
+    
+    const onChangeChatSize = (e) => {
         chatContentRef.current.measureLayout(ReactNative.findNodeHandle(chatScrollRef.current), (xPos, yPos, Width, Height) => {
             chatScrollRef.current.scrollTo({x:0, y:Height - totalChatHeight, animated: false});
         })
-
     }
-    useEffect(() => {
-        if(chatData.length <= 10){
-            chatScrollRef.current.scrollToEnd({animated: false});
-            setIsFirstRender(false);
-        }
-    }, [chatData])
+
 
     return(
         <ScrollView
@@ -78,12 +54,12 @@ const ChatDetail = (props) => {
                 {
                     chatData.map((item, index) => {
                         return (
-                            <View>
-                                <Text>{index}</Text>
-                                {item?<MyChat/>:<YourChat />}
+                            <View key={index}>
+                                <View style={styles.chatWrap, {alignItems:index%2===0?"flex-end":"flex-start"}}>
+                                    <Text style={styles.chatText}>{item}</Text>
+                                </View>
                             </View>
-                        )
-                        ;
+                        );
                     })
                 }
             </View>
