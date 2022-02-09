@@ -16,6 +16,7 @@ const List = (props) => {
     
     // 초기 리스트 업데이트
     useFocusEffect(useCallback(() => {
+        setListData([]);
         fetchData();
     }, []) )
 
@@ -28,7 +29,7 @@ const List = (props) => {
             }
             setListData([...newArr]);
             resolve();
-        }, 1000)
+        }, 100)
     })
 
     // 마지막 스크롤 감지

@@ -15,6 +15,7 @@ const Chat = ({userName}) => {
     // 초기 리스트 업데이트
     useFocusEffect(
         useCallback(() => {
+            setListData([]);
             fetchData()
         }, [])
     )
@@ -28,7 +29,7 @@ const Chat = ({userName}) => {
             }
             setListData([...newArr]);
             resolve();
-        }, 1000)
+        }, 100)
     })
 
     // 채팅 아이템 클릭
