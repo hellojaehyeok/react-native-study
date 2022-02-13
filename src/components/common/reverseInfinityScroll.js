@@ -5,18 +5,19 @@ const R_InfinityScroll = ({children, onScrollEnd}) => {
     const chatScrollRef = useRef();
     const chatContentRef = useRef();
     const [totalChatHeight, setTotalChatHeight] = useState(0);
+    const [isUpdateList, setIsUpdateList] = useState(true);
 
     const onScrollChat = async e => {
-        if(e.nativeEvent.contentOffset.y == 0){
+        if(e.nativeEvent.contentOffset.y == 0 && isUpdateList){
+            setIsUpdateList(false);
             setTotalChatHeight(e.nativeEvent.contentSize.height);
             onScrollEnd();
         }
     }
 
     const onChangeChatSize = (e) => {
-        // scrollView의 height는 콘텐츠의 양과 관계 없이 일정하기 때문에
-        // View로 감싼 후 높이를 가져온다.
         chatContentRef.current.measure((x, y, width, height) => {
+            setIsUpdateList(true);
             chatScrollRef.current.scrollTo({x:0, y:height - totalChatHeight, animated: false});
         })
     }
@@ -26,6 +27,7 @@ const R_InfinityScroll = ({children, onScrollEnd}) => {
             onScroll={onScrollChat}
             ref={chatScrollRef}
             onContentSizeChange={onChangeChatSize}
+            scrollEventThrottle={1}
         >
             <View ref={chatContentRef}>
                 {children}

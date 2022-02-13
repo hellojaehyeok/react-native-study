@@ -1,3 +1,4 @@
+import { InfiniteScroll } from '@hellojh/react-native-infinite-scroll';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, TouchableOpacity, FlatList, SafeAreaView} from 'react-native';
@@ -21,16 +22,14 @@ const Chat = ({userName}) => {
     )
 
     // 서버통신이라고 가정
-    const fetchData = () => new Promise((resolve, reject)=>{
-        setTimeout(() => {
-            let newArr = listData;
-            for(let i = 0 ; i < 20 ; i++){
-                newArr.push({title:"chat", id:i, onPress:onPressChat})
-            }
-            setListData([...newArr]);
-            resolve();
-        }, 100)
-    })
+    const fetchData = () => {
+        let newArr = listData;
+        for(let i = 0 ; i < 20 ; i++){
+            newArr.push({title:"chat", id:i, onPress:onPressChat})
+        }
+        setListData([...newArr]);
+    }
+
 
     // 채팅 아이템 클릭
     const onPressChat = (id) => {
@@ -38,19 +37,24 @@ const Chat = ({userName}) => {
     }
 
     // 마지막 스크롤 감지
-    const onScrollEnd = async () =>{
-        await fetchData();
+    const onScrollEnd = () =>{
+         fetchData();
     }
 
     return(
         <SafeAreaView style={styles.container}>
-            <InfinityScroll 
+            <InfiniteScroll
                 endPoint={100}
                 onScrollEnd={onScrollEnd}
-                style={styles.listWrap}
-                data={listData}
-                renderItem={ListEl}
-            />
+            >
+                {
+                    listData.map((item, index) => {
+                        return(
+                            <ListEl item={item} index={index} key={index}/>
+                        )
+                    })
+                }
+            </InfiniteScroll>
         </SafeAreaView>
     )
 };

@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, FlatList, SafeAreaView} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { useCallback, useEffect } from 'react/cjs/react.development';
+import {InfiniteScroll} from '@hellojh/react-native-infinite-scroll';
 import InfinityScroll from '../../../components/common/infinityScroll';
+
 import ListEl from '../../../components/list/listEl';
 import { BLUE, INIDIGO, SKYBLUE } from '../../../constant/color';
 import { VW } from '../../../constant/size';
@@ -12,7 +14,6 @@ import { VW } from '../../../constant/size';
 const List = (props) => {
 
     const [listData, setListData] = useState([]);
-    const [isUpdateList, setIsUpdateList] = useState(true); 
     
     // 초기 리스트 업데이트
     useFocusEffect(useCallback(() => {
@@ -21,31 +22,34 @@ const List = (props) => {
     }, []) )
 
     // 서버통신이라고 가정
-    const fetchData = () => new Promise((resolve, reject)=>{
-        setTimeout(() => {
-            let newArr = listData;
-            for(let i = 0 ; i < 20 ; i++){
-                newArr.push({title:"product"})
-            }
-            setListData([...newArr]);
-            resolve();
-        }, 100)
-    })
+    const fetchData = () => {
+        let newArr = listData;
+        for(let i = 0 ; i < 20 ; i++){
+            newArr.push({title:"product"})
+        }
+        setListData([...newArr]);
+    }
 
     // 마지막 스크롤 감지
-    const onScrollEnd = async () =>{
-        await fetchData();
+    const onScrollEnd = () =>{
+        fetchData();
     }
+
 
     return(
         <SafeAreaView style={styles.container}>
-            <InfinityScroll 
+            <InfiniteScroll
                 endPoint={100}
                 onScrollEnd={onScrollEnd}
-                style={styles.listWrap}
-                data={listData}
-                renderItem={ListEl}
-            />
+            >
+                {
+                    listData.map((item, index) => {
+                        return(
+                            <ListEl item={item} index={index} key={index}/>
+                        )
+                    })
+                }
+            </InfiniteScroll>
         </SafeAreaView>
     )
 };

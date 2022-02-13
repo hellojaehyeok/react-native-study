@@ -3,8 +3,8 @@ import ReactNative, { FlatList, Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { SKYBLUE, SKYBLUEBG } from '../../constant/color';
 import { VH, VW } from '../../constant/size';
-import R_InfinityScroll from '../../components/common/reverseInfinityScroll';
-
+import {R_InfiniteScroll} from '@hellojh/react-native-infinite-scroll'
+// import R_InfinityScroll from '../../components/common/reverseInfinityScroll'
 
 const getChatData = (index) => {
     return [`가${index}`,`나`,`다`,`라`,`마`,`바`,`사`,`아`,`자`,`차`,`카`,`타`,`파`,`하${index}`];
@@ -27,7 +27,7 @@ const ChatDetail = (props) => {
     }
 
     return(
-        <R_InfinityScroll onScrollEnd={onScrollEnd}>
+        <R_InfiniteScroll onScrollEnd={onScrollEnd}>
                 {
                     chatData.map((item, index) => {
                         return (
@@ -39,7 +39,7 @@ const ChatDetail = (props) => {
                         );
                     })
                 }
-        </R_InfinityScroll>
+        </R_InfiniteScroll>
     )
 };
 
